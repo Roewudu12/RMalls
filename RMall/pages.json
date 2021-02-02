@@ -1,10 +1,54 @@
 {
+	"easycom": {
+	        // 下载安装的方式需要前面的"@/"，npm安装的方式无需"@/"
+	        // 下载安装方式
+	        "^u-(.*)": "@/uview-ui/components/u-$1/u-$1.vue"
+	        // npm安装方式
+	        // "^u-(.*)": "uview-ui/components/u-$1/u-$1.vue"
+	},
 	"pages": [{
 		"path": "pages/index/index",
 		"style": {
-			"navigationBarTitleText": "uni-app"
-		}
-	}],
+			"navigationBarTitleText": "uni-app",
+			"navigationStyle":"custom"
+			}
+		},{
+            "path" : "pages/sort/sort",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/information/information",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/shopping_cart/shopping_cart",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/mine/mine",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+    ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "uni-app",
@@ -13,5 +57,40 @@
 		"app-plus": {
 			"background": "#efeff4"
 		}
+	},
+	"tabBar":{
+		"color": "#7A7E83",
+		"selectedColor": "#d4237a",
+		"list":[{
+			"pagePath": "pages/index/index",
+			"iconPath": "static/tarbar_image/tarbar_index.png",
+			"selectedIconPath": "static/tarbar_image/tarbar_index_selected.png",
+			"text": "首页"
+		},
+		{
+			"pagePath": "pages/sort/sort",
+			"iconPath": "static/tarbar_image/tarbar_sort.png",
+			"selectedIconPath": "static/tarbar_image/tarbar_sort_selected.png",
+			"text": "分类"
+		},
+		{
+			"pagePath": "pages/information/information",
+			"iconPath": "static/tarbar_image/tarbar_information.png",
+			"selectedIconPath": "static/tarbar_image/tarbar_information_selected.png",
+			"text": "消息"
+		},
+		{
+			"pagePath": "pages/shopping_cart/shopping_cart",
+			"iconPath": "static/tarbar_image/tarbar_shopping_cart.png",
+			"selectedIconPath": "static/tarbar_image/tarbar_shopping_cart_selected.png",
+			"text": "购物车"
+		},
+		{
+			"pagePath": "pages/mine/mine",
+			"iconPath": "static/tarbar_image/tarbar_mine.png",
+			"selectedIconPath": "static/tarbar_image/tarbar_mine_selected.png",
+			"text": "我的"
+		}
+		]
 	}
 }
