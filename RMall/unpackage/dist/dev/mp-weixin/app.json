@@ -1,13 +1,14 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/sort/sort",
     "pages/information/information",
+    "pages/sort/sort",
     "pages/shopping_cart/shopping_cart",
     "pages/mine/mine"
   ],
   "subPackages": [],
   "window": {
+    "navigationStyle": "custom",
     "navigationBarTextStyle": "black",
     "navigationBarTitleText": "uni-app",
     "navigationBarBackgroundColor": "#F8F8F8",

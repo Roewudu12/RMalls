@@ -6,13 +6,25 @@
 	        // npm安装方式
 	        // "^u-(.*)": "uview-ui/components/u-$1/u-$1.vue"
 	},
-	"pages": [{
+	"pages": [
+		{
 		"path": "pages/index/index",
 		"style": {
-			"navigationBarTitleText": "uni-app",
-			"navigationStyle":"custom"
+			"navigationBarTitleText": ""
+			
 			}
-		},{
+		}, 
+		{
+		    "path" : "pages/information/information",
+		    "style" :                                                                                    
+		    {
+		        "navigationBarTitleText": "",
+		        "enablePullDownRefresh": false
+		    }
+		    
+		}
+		,
+		{
             "path" : "pages/sort/sort",
             "style" :                                                                                    
             {
@@ -20,17 +32,9 @@
                 "enablePullDownRefresh": false
             }
             
-        }
-        ,{
-            "path" : "pages/information/information",
-            "style" :                                                                                    
-            {
-                "navigationBarTitleText": "",
-                "enablePullDownRefresh": false
-            }
-            
-        }
-        ,{
+        },
+		
+        {
             "path" : "pages/shopping_cart/shopping_cart",
             "style" :                                                                                    
             {
@@ -50,6 +54,7 @@
         }
     ],
 	"globalStyle": {
+		"navigationStyle":"custom",
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "uni-app",
 		"navigationBarBackgroundColor": "#F8F8F8",

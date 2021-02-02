@@ -24,6 +24,19 @@
 /* 垂直间距 */
 /* 透明度 */
 /* 文章场景相关 */
+@font-face {font-family: "rmall-icon";
+  src: url('data:application/x-font-woff2;charset=utf-8;base64,d09GMgABAAAAAALAAAsAAAAABpQAAAJyAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHEIGVgCCcAqBCIESATYCJAMICwYABCAFhQUHLhvOBRHVkzlkPw5y0+RtmNA/FN1BlI/GvgfP9/79u/bBw7lfQCdWQkVOj0pOUqrOpCjB6eMS6oX6BsDmmt1uqkZFmEf5L0cefSF9Kl2a0f9cUy+BBvxBYF1WGUL5vAAjggc04APZkDeMXeASrkMARxYVSFdP7yghDNY8AWRjdXmWUM6MwTBfCCFQs9Ug17CE1Kl6DlwNqZev1EkIFFZjJQwudS/Q9nu0A/SOvzPhI1hAQLstoIEKwICM1rr70QijaZzbkAf7ihX4Pfq+r0b2qkDYX2dFRwCQAZn3xHLZt/pLBYABLFAC1I4ygg1br5lpJ7eeFkcSseUkQiJvP07djDh7kiYekbN5evg51x9tx8Zct83fXOy1pJakmi/fWr4ltiRey3XZ+3lJaXHh783fk+43JTYnfm/5Hs6rffOivrmeNgD8V/qOrkEA0b6B7Z2Obvof8gwAH1oPKqDRf2Xop4XQzjUCP4nVs8HoHEuljMqq9StKsCfPcTjAB+vj+DRWmnhHfsGReF/aINkpaBxFqGHtPxosHg0QAji6wVHOwG6PeLbRiAkDZVwCEBK4C4oonoEmgbeoIb+DJUkEAiRIMjjGpfxIjyLZdeCRUDFa0H9YTIrOSWFJQXlfmYNuOL29Il4QO15IZYFt0NVthe+KEWmuFeUz9cwOHKUAl0lvQ+8TZEorGq5n5jw0jat7U21SEFIcCRWjBf2HxaTo/EMsBQXlfdVC/Q2nt1fUWrac/kIqCxwfurrthV6FsWfJva0un6lnduAAP3EtXHYrxHncCXL9pBUN1/MIZx4au5XrK6zXFYcv3YcQUliy/c5O1RyKUVEIAAA=') format('woff2');
+}
+.rmall-icon {
+  font-family: "rmall-icon" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.rmall-icon-scan:before {
+  content: "\f13b";
+}
 .u-relative,
 .u-rela {
   position: relative;
