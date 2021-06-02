@@ -1,10 +1,19 @@
 {
   "pages": [
     "pages/index/index",
+    "pages/login/login",
+    "pages/shop_details/shop_details",
+    "pages/confirm_order/confirm_order",
+    "pages/mine/mine",
+    "pages/shopping_cart/shopping_cart",
     "pages/information/information",
     "pages/sort/sort",
-    "pages/shopping_cart/shopping_cart",
-    "pages/mine/mine"
+    "pages/shop_details/comments/comments",
+    "pages/shop_details/comments/reply",
+    "pages/shop_details/shopping_cart/shopping_cart",
+    "pages/choose_adress/choose_adress",
+    "pages/choose_adress/add_adress/add_adress",
+    "pages/order/order"
   ],
   "subPackages": [],
   "window": {

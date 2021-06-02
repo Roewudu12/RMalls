@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.roe.rmallservice.mapper.ImagesMapper">
+    <resultMap id="allImageInfo" type="com.roe.rmallservice.entity.Images">
+        <id column="image_id" property="imageId" jdbcType="BIGINT"></id>
+        <result column="good_id" property="goodId" jdbcType="BIGINT"></result>
+        <result column="image_http" property="imageHttp" jdbcType="VARCHAR"></result>
+    </resultMap>
+
+</mapper>

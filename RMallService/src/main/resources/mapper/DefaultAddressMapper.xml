@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.roe.rmallservice.mapper.DefaultAddressMapper">
+    <select id="getDefaultAddress" resultMap="com.roe.rmallservice.mapper.AddressMapper.addressInfo">
+        select b.* from default_address a,addresses b where a.user_id = #{userId} and a.address_id = b.address_id
+    </select>
+</mapper>

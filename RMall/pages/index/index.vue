@@ -3,7 +3,8 @@
 		<!-- 导航栏 -->
 		<u-navbar :is-back="false">
 			<view class="search-wrap">
-				<u-search :placeholder="placeholder" v-model="keyword" :show-action="false" input-align="center" border-color="#d4237a"></u-search>
+				<u-search :placeholder="placeholder" v-model="keyword" :show-action="false" input-align="center"
+					border-color="#d4237a"></u-search>
 			</view>
 		</u-navbar>
 		<!-- 轮播图 -->
@@ -14,57 +15,63 @@
 		<view class="waterfull-wrap">
 			<u-waterfall v-model="flowList" ref="uWaterfall">
 				<template v-slot:left="{leftList}">
-					<view class="goods-warter" v-for="(item, index) in leftList" :key="index" @click="enter(item.id)">
+					<view class="goods-warter" v-for="(item, index) in leftList" :key="index"
+						@click="enter(item.goodId)">
 						<!-- 警告：微信小程序中需要hx2.8.11版本才支持在template中结合其他组件，比如下方的lazy-load组件 -->
-						<u-lazy-load threshold="-450" border-radius="10" :image="item.image" :index="index"></u-lazy-load>
+						<u-lazy-load threshold="-450" border-radius="10" :image="item.detailImages[0].imageHttp"
+							:index="index">
+						</u-lazy-load>
 						<view class="goods-title">
-							{{item.title}}
+							{{item.goodName}}
 						</view>
 						<view class="goods-details">
 							<view class="goods-price">
-								{{item.price}}元
+								{{item.goodPrice}}元
 							</view>
 							<view class="goods-paid-number">
-								{{item.paid_number}}人付款
+								{{item.goodSoldNum?item.goodSoldNum:0}}人付款
 							</view>
 						</view>
 						<view class="goods-tag">
-							<view class="goods-tag-plant">
-								2000人种草
+							<view class="goods-tag-plant" v-if="item.goodRecommend">
+								{{item.goodRecommend}}人种草
 							</view>
 						</view>
 						<view class="goods-shop">
-							{{item.shop}}
+							{{item.seller.username}}
 						</view>
 					</view>
 				</template>
 				<template v-slot:right="{rightList}">
-					<view class="goods-warter" v-for="(item, index) in rightList" :key="index" @click="enter(item.id)">
-						<u-lazy-load threshold="-450" border-radius="10" :image="item.image" :index="index"></u-lazy-load>
+					<view class="goods-warter" v-for="(item, index) in rightList" :key="index"
+						@click="enter(item.goodId)">
+						<u-lazy-load threshold="-450" border-radius="10" :image="item.detailImages[0].imageHttp"
+							:index="index">
+						</u-lazy-load>
 						<view class="goods-title">
-							{{item.title}}
+							{{item.goodName}}
 						</view>
 						<view class="goods-details">
 							<view class="goods-price">
-								{{item.price}}元
+								{{item.goodPrice}}元
 							</view>
 							<view class="goods-paid-number">
-								{{item.paid_number}}人付款
+								{{item.goodSoldNum?item.goodSoldNum:0}}人付款
 							</view>
 						</view>
 
-						<view class="goods-tag">
+						<view class="goods-tag" v-if="item.goodRecommend">
 							<view class="goods-tag-plant">
-								2000人种草
+								{{item.goodRecommend}}人种草
 							</view>
 						</view>
 						<view class="goods-shop">
-							{{item.shop}}
+							{{item.seller.username}}
 						</view>
 					</view>
 				</template>
 			</u-waterfall>
-			<u-loadmore bg-color="rgb(240, 240, 240)" :status="loadStatus" @loadmore="addRandomData"></u-loadmore>
+			<u-loadmore bg-color="rgb(240, 240, 240)" :status="loadStatus"></u-loadmore>
 		</view>
 	</view>
 </template>
@@ -73,6 +80,8 @@
 	export default {
 		data() {
 			return {
+				//当前页码
+				page: 1,
 				//搜索框
 				placeholder: "请输入商品",
 				keyword: '',
@@ -93,124 +102,48 @@
 				//瀑布流数据
 				loadStatus: 'loadmore',
 				flowList: [],
-				list: [{
-						price: 35,
-						title: '北国风光，千里冰封，万里雪飘',
-						shop: '李白杜甫白居易旗舰店',
-						image: 'http://pic.sc.chinaz.com/Files/pic/pic9/202002/zzpic23327_s.jpg',
-						paid_number: 100,
-						plant_number: 3214,
-					},
-					{
-						price: 75,
-						title: '望长城内外，惟余莽莽',
-						shop: '李白杜甫白居易旗舰店',
-						image: 'http://pic.sc.chinaz.com/Files/pic/pic9/202002/zzpic23325_s.jpg',
-						paid_number: 100,
-						plant_number: 3214,
-					},
-					{
-						price: 385,
-						title: '大河上下，顿失滔滔',
-						shop: '李白杜甫白居易旗舰店',
-						image: 'http://pic2.sc.chinaz.com/Files/pic/pic9/202002/hpic2119_s.jpg',
-						paid_number: 100,
-						plant_number: 3214,
-					},
-					{
-						price: 784,
-						title: '欲与天公试比高',
-						shop: '李白杜甫白居易旗舰店',
-						image: 'http://pic2.sc.chinaz.com/Files/pic/pic9/202002/zzpic23369_s.jpg',
-						paid_number: 100,
-						plant_number: 3214,
-					},
-					{
-						price: 7891,
-						title: '须晴日，看红装素裹，分外妖娆',
-						shop: '李白杜甫白居易旗舰店',
-						image: 'http://pic2.sc.chinaz.com/Files/pic/pic9/202002/hpic2130_s.jpg',
-						paid_number: 100,
-						plant_number: 3214,
-					},
-					{
-						price: 2341,
-						shop: '李白杜甫白居易旗舰店',
-						title: '江山如此多娇，引无数英雄竞折腰',
-						image: 'http://pic1.sc.chinaz.com/Files/pic/pic9/202002/zzpic23346_s.jpg',
-						paid_number: 100,
-						plant_number: 3214,
-					},
-					{
-						price: 661,
-						shop: '李白杜甫白居易旗舰店',
-						title: '惜秦皇汉武，略输文采',
-						image: 'http://pic1.sc.chinaz.com/Files/pic/pic9/202002/zzpic23344_s.jpg',
-						paid_number: 100,
-						plant_number: 3214,
-					},
-					{
-						price: 1654,
-						title: '唐宗宋祖，稍逊风骚',
-						shop: '李白杜甫白居易旗舰店',
-						image: 'http://pic1.sc.chinaz.com/Files/pic/pic9/202002/zzpic23343_s.jpg',
-						paid_number: 100,
-						plant_number: 3214,
-					},
-					{
-						price: 1678,
-						title: '一代天骄，成吉思汗',
-						shop: '李白杜甫白居易旗舰店',
-						image: 'http://pic1.sc.chinaz.com/Files/pic/pic9/202002/zzpic23343_s.jpg',
-						paid_number: 100,
-						plant_number: 3214,
-					},
-					{
-						price: 924,
-						title: '只识弯弓射大雕',
-						shop: '李白杜甫白居易旗舰店',
-						image: 'http://pic1.sc.chinaz.com/Files/pic/pic9/202002/zzpic23343_s.jpg',
-						paid_number: 100,
-						plant_number: 3214,
-					},
-					{
-						price: 8243,
-						title: '俱往矣，数风流人物，还看今朝',
-						shop: '李白杜甫白居易旗舰店',
-						image: 'http://pic1.sc.chinaz.com/Files/pic/pic9/202002/zzpic23343_s.jpg',
-						paid_number: 100,
-						plant_number: 3214,
-					},
-				],
+
 			}
 		},
 		onLoad() {
-			this.addRandomData();
+			console.log("/pages/index/index.vue");
+			// this.checkLogin();
+			this.getGoods();
 		},
+		//触底加载更多
 		onReachBottom() {
 			this.loadStatus = 'loading';
 			// 模拟数据加载
 			setTimeout(() => {
-				this.addRandomData();
+				this.getGoods();
 				this.loadStatus = 'loadmore';
 			}, 1000)
 		},
 
 		methods: {
-			addRandomData() {
-				for (let i = 0; i < 10; i++) {
-					let index = this.$u.random(0, this.list.length - 1);
-					// 先转成字符串再转成对象，避免数组对象引用导致数据混乱
-					let item = JSON.parse(JSON.stringify(this.list[index]))
-					item.id = this.$u.guid();
-					this.flowList.push(item);
-				}
+
+			//获取Page页的商品
+			getGoods() {
+				this.$u.post('/goods/showGood/hot', {
+					page: this.page
+				}).then(res => {
+					console.log("getGoods", res)
+					if (res.data.data.length > 0) {
+						this.flowList = this.flowList.concat(res.data.data);
+						this.page++;
+					} else {
+						this.loadStatus = "nomore";
+					}
+				})
 			},
 			/**
 			 * 单击瀑布流事件
 			 */
-			enter(id){
-				console.log("点击了"+id)
+			enter(id) {
+				console.log("点击了" + id)
+				this.$u.route('/pages/shop_details/shop_details', {
+					id: id,
+				});
 			}
 		}
 	}

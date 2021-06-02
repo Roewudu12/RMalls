@@ -1,0 +1,15 @@
+package com.roe.rmallservice.mapper;
+
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.fasterxml.jackson.databind.ser.Serializers;
+import com.roe.rmallservice.entity.Comments;
+import org.springframework.stereotype.Repository;
+
+/**
+ * @Auther: HP
+ * @Date: 2021/5/17 16:33
+ * @Description:
+ **/
+@Repository
+public interface CommentsMapper extends BaseMapper<Comments> {
+}

@@ -1,0 +1,73 @@
+
+.my_circle_radius {
+    border-top-right-radius: 15 rpx;
+    border-top-left-radius: 15 rpx;
+    border-bottom-left-radius: 15 rpx;
+    border-bottom-right-radius: 15 rpx;
+}
+
+.my_backgroundColor_gray {
+    background-color: #EBEEF5;
+}
+
+.my_backgroudColor_info {
+    background-color: #efefef;
+}
+
+.my_text_col_center {
+    display: flex;
+    align-items: center;
+    /*垂直居中*/
+}
+
+.my_row_flex {
+    display: flex;
+    flex-direction: row;
+}
+
+.my_status_bar {
+    height: var(--status-bar-height);
+    width: 100%;
+}
+
+.my_line {
+    color: #C0C0C0;
+}
+
+.my_font_color_info {
+    color: #C0C0C0;
+}
+
+.search-wrap {
+    margin: 0 20 rpx;
+    flex: 1;
+}
+
+.my_footer {
+	display: flex;
+	position: fixed;
+	bottom: var(--window-bottom);
+	width: 100%;
+	z-index: 3;
+}
+
+.my_font_color_price {
+    color: #DD524D;
+}
+
+.my_font_color_main {
+    color: #d3217b;
+}
+
+.my_font_color_title {
+    color: #000000;
+}
+
+.my_font_weight {
+    font-weight: 600;
+}
+
+.my_right_elements {
+    margin-left: auto;
+}
+

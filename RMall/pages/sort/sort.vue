@@ -3,7 +3,7 @@
 	
 		<!-- 导航栏 -->
 		<u-navbar :is-back="false">
-			<u-icon class="icon_scan" name="scan" size="50"></u-icon>
+			<u-icon class="icon_scan" custom-prefix="rmall-icon" name="scan" size="50"></u-icon>
 			<view class="search-wrap">
 				<u-search :placeholder="placeholder" v-model="keyword" :show-action="false" input-align="center" border-color="#d4237a"></u-search>
 			</view>
@@ -172,6 +172,7 @@
 </script>
 
 <style lang="scss" scoped>
+	
 	.search-wrap {
 		margin: 0 20rpx;
 		flex: 1;

@@ -1,0 +1,20 @@
+{
+  "component": true,
+  "usingComponents": {
+    "shop_details-u-waterfall-left": "/pages/shop_details/shop_details-u-waterfall-left",
+    "shop_details-u-waterfall-right": "/pages/shop_details/shop_details-u-waterfall-right",
+    "u-navbar": "/uview-ui/components/u-navbar/u-navbar",
+    "u-search": "/uview-ui/components/u-search/u-search",
+    "u-icon": "/uview-ui/components/u-icon/u-icon",
+    "u-line": "/uview-ui/components/u-line/u-line",
+    "u-swiper": "/uview-ui/components/u-swiper/u-swiper",
+    "u-card": "/uview-ui/components/u-card/u-card",
+    "u-image": "/uview-ui/components/u-image/u-image",
+    "u-button": "/uview-ui/components/u-button/u-button",
+    "u-divider": "/uview-ui/components/u-divider/u-divider",
+    "u-waterfall": "/uview-ui/components/u-waterfall/u-waterfall",
+    "u-lazy-load": "/uview-ui/components/u-lazy-load/u-lazy-load",
+    "u-badge": "/uview-ui/components/u-badge/u-badge",
+    "u-popup": "/uview-ui/components/u-popup/u-popup"
+  }
+}

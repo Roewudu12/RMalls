@@ -1,0 +1,33 @@
+spring:
+  datasource:
+    url: jdbc:mysql://roewudu12.cn:3306/rmall?autoReconnect=true&useUnicode=true&createDatabaseIfNotExist=true&characterEncoding=utf8&serverTimezone=UTC
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      max-lifetime: 28800
+    #配置redis
+  redis:
+    host: roewudu12.cn
+    port: 6379
+  servlet:
+     multipart:
+       max-file-size: 100MB
+       max-request-size: 1000MB
+
+
+server:
+  port: 8888
+
+mybatis-plus:
+  # 如果是放在src/main/java目录下 classpath:/com/*/*/mapper/*Mapper.xml
+  # 如果是放在resource目录 classpath:/mapper/**.xml
+  mapper-locations: classpath:/mapper/**.xml
+  configuration:
+    # 这个配置会将执行的sql打印出来，在开发或测试的时候可以用
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    db-config:
+      id-type: assign_id
+
+

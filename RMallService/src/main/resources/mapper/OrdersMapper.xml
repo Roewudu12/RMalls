@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.roe.rmallservice.mapper.OrdersMapper">
+    <!--订单页面返回信息-->
+    <resultMap id="orderPage" type="com.roe.rmallservice.entity.Orders">
+        <id column="order_id" jdbcType="BIGINT" property="orderId"></id>
+        <result column="buyer_id" property="buyerId" jdbcType="BIGINT"></result>
+        <result column="address_id" property="addressId" jdbcType="BIGINT"></result>
+        <result column="order_price" property="orderPrice" jdbcType="DECIMAL"></result>
+        <result column="order_status" property="orderStatus" jdbcType="INTEGER"></result>
+        <result column="create_time" property="createTime" jdbcType="DATE"></result>
+        <result column="update_time" property="updateTime" jdbcType="DATE"></result>
+        <result column="good_num" property="goodNum" jdbcType="INTEGER"></result>
+        <result column="good_choice" property="goodChoice" jdbcType="VARCHAR"></result>
+        <result column="good_id" property="goodId" jdbcType="BIGINT"></result>
+        <result column="seller_id" property="sellerId" jdbcType="BIGINT"></result>
+
+        <association property="good" column="id=good_id" select="com.roe.rmallservice.mapper.GoodsMapper.selectGoodDetailsByGoodId"></association>
+    </resultMap>
+
+
+
+    <select id="showOrdersByType" resultMap="orderPage">
+        select * from orders where buyer_id = #{userId} and order_status = #{status}
+    </select>
+</mapper>

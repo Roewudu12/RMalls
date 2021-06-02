@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.roe.rmallservice.mapper.GoodsMapper">
+    <resultMap id="hotGoods" type="com.roe.rmallservice.entity.Goods">
+        <id column="good_id" property="goodId" jdbcType="BIGINT"></id>
+        <result column="good_seller_id" property="goodSellerId" jdbcType="VARCHAR"></result>
+        <result column="good_sold_num" property="goodSoldNum" jdbcType="INTEGER"></result>
+        <result column="good_name" property="goodName" jdbcType="VARCHAR"></result>
+        <result column="good_recommend" property="goodRecommend" jdbcType="INTEGER"></result>
+        <result column="good_price" property="goodPrice" jdbcType="DECIMAL"></result>
+        <association property="seller" javaType="com.roe.rmallservice.entity.Users">
+            <result column="username" property="username" jdbcType="VARCHAR"></result>
+        </association>
+    </resultMap>
+    <resultMap id="goodDetails" type="com.roe.rmallservice.entity.Goods">
+        <id column="good_id" property="goodId" jdbcType="BIGINT"></id>
+        <result column="good_seller_id" property="goodSellerId" jdbcType="VARCHAR"></result>
+        <result column="good_sold_num" property="goodSoldNum" jdbcType="INTEGER"></result>
+        <result column="good_name" property="goodName" jdbcType="VARCHAR"></result>
+        <result column="good_recommend" property="goodRecommend" jdbcType="INTEGER"></result>
+        <result column="good_price" property="goodPrice" jdbcType="DECIMAL"></result>
+        <association property="seller" javaType="com.roe.rmallservice.entity.Users">
+            <result column="user_id" property="userId" jdbcType="BIGINT"></result>
+            <result column="username" property="username" jdbcType="VARCHAR"></result>
+        </association>
+        <collection property="detailImages" ofType="com.roe.rmallservice.entity.Images">
+            <result column="image_http" property="imageHttp" jdbcType="VARCHAR"></result>
+        </collection>
+    </resultMap>
+
+    <!--所有商品有关信息/采用独立子查询解决分页有误问题-->
+    <resultMap id="allGoodInfo" type="com.roe.rmallservice.entity.Goods">
+        <id column="good_id" property="goodId" jdbcType="BIGINT"></id>
+        <result column="good_sold_num" property="goodSoldNum" jdbcType="INTEGER"></result>
+        <result column="good_name" property="goodName" jdbcType="VARCHAR"></result>
+        <result column="good_recommend" property="goodRecommend" jdbcType="INTEGER"></result>
+        <result column="good_price" property="goodPrice" jdbcType="DECIMAL"></result>
+        <result column="good_status" property="goodStatus" jdbcType="INTEGER"></result>
+        <result column="good_stock" property="goodStock" jdbcType="INTEGER"></result>
+        <result column="create_time" property="createTime" jdbcType="DATE"></result>
+        <result column="update_time" property="updateTime" jdbcType="DATE"></result>
+        <association property="seller" javaType="com.roe.rmallservice.entity.Users">
+            <result column="user_id" property="userId" jdbcType="BIGINT"></result>
+            <result column="username" property="username" jdbcType="VARCHAR"></result>
+        </association>
+        <association property="cate" javaType="com.roe.rmallservice.entity.Category">
+            <result column="cate_id" property="cateId" jdbcType="BIGINT"></result>
+            <result column="cate_name" property="cateName" jdbcType="VARCHAR"></result>
+            <result column="cate_fid" property="cateFid" jdbcType="BIGINT"></result>
+        </association>
+        <collection property="detailImages" column="good_id" ofType="com.roe.rmallservice.entity.Images" select="selectImageList">
+        </collection>
+    </resultMap>
+
+    <!--首页获取商品信息-->
+    <select id="selectGoodsByRecommend" resultMap="allGoodInfo">
+        select *
+        from goods a left join users b on good_seller_id=user_id
+        where good_stock>0 and good_status=1
+        order by good_recommend desc
+    </select>
+
+    <!-- 获取所有商品信息-->
+    <select id="selectGoods" resultMap="allGoodInfo">
+        select *
+        from goods a left join users b on good_seller_id=user_id
+        left join category c on a.cate_id = c.cate_id
+    </select>
+    <select id="selectImageList" resultType="com.roe.rmallservice.entity.Images">
+        select * from images where good_id= #{goodId}
+    </select>
+
+
+ <!--  通过类别获取商品信息 -->
+    <select id="selectGoodsByCate" resultMap="allGoodInfo">
+        select *
+        from goods a left join users b on good_seller_id=user_id
+        where good_stock>0 and cate_id=#{cateId} and good_status=1
+        order by good_recommend desc
+    </select>
+<!--  通过id获取商品详细信息  -->
+    <select id="selectGoodDetailsByGoodId" resultMap="allGoodInfo">
+        select * from goods left join users on goods.good_seller_id = users.user_id
+        where good_id=#{id}
+    </select>
+
+<!--  通过用户id获取商品列表  -->
+    <select id="selectGoodsBySellerId" resultMap="allGoodInfo">
+        select *
+        from goods a left join users b on good_seller_id=user_id
+        where good_stock>0 and good_status=1 and good_seller_id=#{sellerId}
+        order by good_recommend desc
+    </select>
+</mapper>
