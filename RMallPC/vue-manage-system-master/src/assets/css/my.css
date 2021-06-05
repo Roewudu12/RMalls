@@ -1,0 +1,10 @@
+.roe_row_flex {
+    display: flex;
+    flex-direction: row;
+}
+
+.roe_text_col_center {
+    display: flex;
+    align-items: center;
+    /*垂直居中*/
+}
