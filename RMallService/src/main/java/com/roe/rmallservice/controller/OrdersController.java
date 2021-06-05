@@ -73,6 +73,20 @@ public class OrdersController {
     }
 
     /**
+     * 去付款用户订单
+     * @param order
+     * @return
+     */
+    @RequestMapping(value = {"/update/pay"},method = RequestMethod.POST)
+    public String updatePayOrder(@RequestBody Orders order){
+        boolean isOk = ordersService.updatePayOrder(order);
+        if (!isOk) {
+            return JSON.toJSONString(Result.error(ResultCode.ERROR));
+        }
+        return JSON.toJSONString(Result.ok("更新成功"));
+    }
+
+    /**
      * 展示订单
      * @param page
      * @param userId
@@ -84,7 +98,9 @@ public class OrdersController {
         List<Orders> orders;
 
         if (userAuthority==1){
-            orders =  ordersService.showOrdersByUserId(userId,page, Constants.PAGE_NUM);
+            orders =  ordersService.showOrdersBySellerId(userId,page, Constants.PAGE_NUM);
+        }else if(userAuthority==2){
+            orders =  ordersService.showOrdersByBuyerId(userId,page, Constants.PAGE_NUM);
         }else {
             orders =  ordersService.showOrders(page, Constants.PAGE_NUM);
         }
@@ -105,7 +121,9 @@ public class OrdersController {
     public String count(@RequestParam("userAuthority") int userAuthority,@RequestParam("userId") Long userId){
         Integer count;
         if(userAuthority==1){
-            count = ordersService.ordersCountByUserId(userId);
+            count = ordersService.ordersCountBySellerId(userId);
+        }else if(userAuthority ==2){
+            count = ordersService.ordersCountByBuyerId(userId);
         }else {
             count = ordersService.ordersCount();
         }
@@ -115,4 +133,36 @@ public class OrdersController {
 
         return JSON.toJSONString(Result.ok(count));
     }
+
+    /**
+     * 查看数据库中存储的不同状态订单数
+     * @return
+     */
+    @RequestMapping(value = {"/count/status"},method = RequestMethod.POST)
+    public String count(@RequestParam("userAuthority") int userAuthority,@RequestParam("userId") Long userId,@RequestParam("status") int status){
+        Integer count;
+        if(userAuthority==1){
+            count = ordersService.ordersCountBySellerIdAndStatus(userId,status);
+        }else if(userAuthority==2){
+            count = ordersService.ordersCountByBuyerIdAndStatus(userId,status);
+        }else {
+            count = ordersService.ordersCountByStatus(status);
+        }
+        if (count == null) {
+            return JSON.toJSONString(Result.error(ResultCode.ERROR));
+        }
+
+        return JSON.toJSONString(Result.ok(count));
+    }
+
+    @RequestMapping(value = {"/cancel"},method = RequestMethod.POST)
+    public String cancelOrder(@RequestBody Orders order){
+        log.info("取消的order{}",order);
+        boolean isOk = ordersService.cancelOrder(order);
+        if (!isOk) {
+            return JSON.toJSONString(Result.error(ResultCode.ERROR));
+        }
+        return JSON.toJSONString(Result.ok("取消成功"));
+    }
+
 }

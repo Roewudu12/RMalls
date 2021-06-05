@@ -62,7 +62,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()//放过option请求
                 //放行请求
-                .antMatchers("/login").permitAll()
+                .antMatchers("/login","/user/insert").permitAll()
                 //配置什么样的角色有什么样的权限
                 .anyRequest().authenticated()
                 //允许注销

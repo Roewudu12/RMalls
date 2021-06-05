@@ -140,7 +140,7 @@
 			this.footerbottom =
 				document.getElementsByTagName('uni-tabbar')[0].offsetHeight + 'px';
 			// #endif
-			this.box=[];//清空box
+			this.box = []; //清空box
 			this.getAllCarts();
 		},
 		computed: {
@@ -181,7 +181,7 @@
 				}).then(res => {
 					console.log("getAllCarts", res)
 					this.carts = res.data.data;
-					
+
 					for (let i = 0; i < this.carts.length; i++) {
 						if (this.carts[i].good.$ref) {
 							let index = this.carts[i].good.$ref.split("[")[1].split(']')[0];
@@ -247,14 +247,14 @@
 			/**
 			 * 跳转到下单页面
 			 */
-			enter() {//跳转
+			enter() { //跳转
 				let needSubmit = this.getNeedSubmitCartId();
-				console.log("enter",needSubmit);
-				if(needSubmit.length==0){
+				console.log("enter", needSubmit);
+				if (needSubmit.length == 0) {
 					uni.showToast({
-						title:"请选择您要购买的商品！",
-						duration:2000,
-						icon:"none"
+						title: "请选择您要购买的商品！",
+						duration: 2000,
+						icon: "none"
 					});
 					return false;
 				}
@@ -264,12 +264,12 @@
 				});
 
 			},
-			getNeedSubmitCartId(){
-				let needSubmit=[];
+			getNeedSubmitCartId() {
+				let needSubmit = [];
 				let carts = this.carts;
 				let box = this.box;
-				for(let i=0;i<box.length;i++){
-					if(box[i].checked){
+				for (let i = 0; i < box.length; i++) {
+					if (box[i].checked) {
 						needSubmit.push(carts[i]);
 					}
 				}
@@ -280,7 +280,7 @@
 </script>
 
 <style>
-	page{
+	page {
 		background-color: #EBEEF5;
 
 	}
@@ -288,10 +288,11 @@
 <style scoped lang="scss">
 	$footer_height:100rpx;
 	$header_height:265rpx;
-	
-	.shopping_cart{
+
+	.shopping_cart {
 		height: calc(50vh);
 	}
+
 	.my_circle_radius {
 		border-top-right-radius: 15rpx;
 		border-top-left-radius: 15rpx;
@@ -303,7 +304,7 @@
 		margin-left: auto;
 
 	}
-	
+
 	.title {
 		padding-left: 15rpx;
 		color: $u-main-color;
@@ -372,6 +373,11 @@
 		width: 100%;
 	}
 
+	.goods_price {
+		color: #ff0000;
+		font-weight: 700;
+	}
+
 	.goods_details_details {
 		margin-top: 15rpx;
 		width: 100%;
@@ -382,10 +388,7 @@
 		text-align: right;
 	}
 
-	.goods_price {
-		color: #ff0000;
-		font-weight: 700;
-	}
+
 
 	.popup_head {
 		width: 100%;

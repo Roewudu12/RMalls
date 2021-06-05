@@ -1,3 +1,8 @@
+
+page{
+	background-color: #EBEEF5;
+}
+
 @charset "UTF-8";
 /**
  * 这里是uni-app内置的常用样式变量

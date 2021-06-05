@@ -10,7 +10,7 @@
 			<button @tap="submit" :style="[inputStyle]" class="getCaptcha">登录</button>
 			<view class="alternative">
 				<view class="password">手机验证码登录</view>
-				<view class="issue">遇到问题</view>
+				<view class="issue" @click="to_register">注册</view>
 			</view>
 		</view>
 		<view class="buttom">
@@ -62,13 +62,27 @@
 				this.$u.post('/login', this.form)
 					.then(res => {
 						console.log("login", res)
-						uni.setStorageSync("session", res.cookies[0]);
-						uni.setStorageSync("userId", res.data.data.userId);
-						uni.switchTab({
-							url: "../index/index"
-						})
-					})
+						if (res.data.code == 201) {
+							if (res.data.data.userAuthority == 2) {
+								uni.setStorageSync("session", res.cookies[0]);
+								uni.setStorageSync("userId", res.data.data.userId);
+								uni.switchTab({
+									url: "../index/index"
+								})
+							}
+						} else {
+							uni.showToast({
+								title: "登陆失败！",
+								duration: 3000,
+								icon: "none"
+							})
+						}
 
+					})
+			},
+			to_register(){
+				console.log("to_register");
+				this.$u.route("/pages/login/register/register");
 			}
 		}
 	};

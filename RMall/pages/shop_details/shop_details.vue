@@ -50,10 +50,10 @@
 			<!-- 其他 -->
 			<view class="other u-row-around my_row_flex" slot="foot">
 				<view>
-					<u-icon name="heart"></u-icon>推荐
+					<u-icon name="heart" @click="to_recommend"></u-icon>推荐
 				</view>
 				<view>
-					<u-icon name="share"></u-icon>分享
+					<u-icon :name="isStar?'star-fill':'star'" @click="to_favorite"></u-icon>收藏
 				</view>
 			</view>
 		</u-card>
@@ -106,7 +106,7 @@
 		<u-card padding="15" :border="false" :head-border-bottom="false" margin="15rpx">
 			<view slot="head" @click="to_comments" class="my_row_flex">
 				<view class="my_font_color_title">
-					宝贝评价({{content_num}})
+					宝贝评价({{commentsCount}})
 				</view>
 				<view class="my_right_elements my_row_flex my_font_color_main">
 					<view class="u-font-25 u-margin-right-15 my_text_col_center">查看全部</view>
@@ -116,11 +116,11 @@
 			<view class="" slot="body">
 				<view class="u-margin-bottom-30" v-for="(item,index) in content_part" :key="index">
 					<view class="my_row_flex">
-						<u-image class="my_text_col_center" :src="item.user_icon" width="50" height="50" shape="circle">
+						<u-image class="my_text_col_center" :src="item.publisher.image" width="50" height="50" shape="circle">
 						</u-image>
 						<view class="u-margin-left-25">
-							<view class="my_font_color_title u-font-26">{{item.user_name}}</view>
-							<view class="my_font_color_info u-font-20">{{item.content_time}}</view>
+							<view class="my_font_color_title u-font-26">{{item.publisher.username}}</view>
+							<view class="my_font_color_info u-font-20">{{$u.timeFormat(item.createTime, 'yyyy年mm月dd日 hh时MM分ss秒')}}</view>
 						</view>
 					</view>
 					<view class="u-margin-top-10 u-font-26">
@@ -253,17 +253,6 @@
 				<view class="goods_price u-padding-top-35 u-margin-left-30 u-font-xl my_font_color_price">
 					￥{{good.goodPrice}}</view>
 			</view>
-			<!-- 点击去评论区 -->
-			<view @click="toContents" class="to_contents u-padding-15 u-margin-20 my_circle_radius my_row_flex">
-				<view class="my_row_flex">
-					<u-icon name="chat"></u-icon>
-					<view class="u-font-sm u-margin-left-15">有999个人评价"还不错"</view>
-				</view>
-				<view class="right_content my_row_flex my_right_elements">
-					<view class="u-font-sm">全部({{content_num}})</view>
-					<u-icon name="arrow-right-double"></u-icon>
-				</view>
-			</view>
 			<u-line color="info"></u-line>
 			<!-- 商品选项 -->
 			<view class="popup_body u-padding-10">
@@ -342,12 +331,16 @@
 				 * 瀑布流
 				 */
 				flowList: [],
-
+				commentsCount:0,//评论数量
+				isStar:false,//是否收藏了
 			}
 		},
 		onLoad(e) {
 			console.log("pages/shop_details/shop_details.vue", e);
+			this.isFavorited(e.id);
 			this.getGoodDetails(e.id);
+			this.getComments(e.id);
+			this.getCommentsCount(e.id);
 		},
 
 		methods: {
@@ -444,13 +437,45 @@
 				})
 			},
 			/**
+			 * 查看该商品评论
+			 */
+			getComments(goodId){
+				let data={
+					goodId:goodId,
+					page:1,
+					pageNum:3
+				}
+			
+				this.$u.post("/comment/show",data)
+				.then(res=>{
+					console.log("getComments",res)
+					this.content_part=res.data.data;
+				})
+			},
+			/**
+			 * 查看评论数量
+			 */
+			getCommentsCount(goodId){
+				let data={
+					goodId:goodId,
+				}
+				this.$u.post("/comment/count",data)
+				.then(res=>{
+					console.log("getCommentsCount",res)
+					this.commentsCount=res.data.data.count;
+				})
+			},
+			/**
 			 * 进入评论详情
 			 * 
 			 */
 			to_comments() {
-				uni.navigateTo({
-					url: '/pages/shop_details/comments/comments'
-				});
+				// uni.navigateTo({
+				// 	url: '/pages/shop_details/comments/comments'
+				// });
+				this.$u.route("/pages/shop_details/comments/comments",{
+					goodId:this.good.goodId
+				})
 			},
 			//加入购物车
 			addToCart() {
@@ -520,6 +545,68 @@
 					}
 				}
 				this.selected = selected;
+			},
+			/**
+			 * 去推荐商品
+			 */
+			to_recommend(){
+				let goodRecommend=1;
+				if(this.good.goodRecommend){
+					//如果存在
+					goodRecommend = this.good.goodRecommend+1;
+				}
+				this.good.goodRecommend = goodRecommend;
+				this.$u.post("/goods/update",this.good,this.$JsonHeader)
+				.then(res=>{
+					console.log("to_recommend",res)
+					uni.showToast({
+						title:"感谢你的支持!",
+						duration:2000,
+						icon:"none"
+					})
+				})
+			},
+			/**
+			 * 将商品收藏
+			 */
+			to_favorite(){
+				if(this.isStar){
+					uni.showToast({
+						title:"已收藏",
+						duration:2000,
+					})
+				}else{
+					let data = {
+						userId:uni.getStorageSync("userId"),
+						goodId:this.good.goodId,
+					}
+					this.$u.post("/favorite/insert",data,this.$JsonHeader)
+					.then(res=>{
+						console.log("to_favorite",res);
+						this.isStar = true;
+						uni.showToast({
+							title:"收藏成功",
+							duration:2000,
+						})
+					})
+				}
+				
+			},
+			/**
+			 * 判断当前用户是否已经收藏
+			 */
+			isFavorited(id){
+				let data = {
+					userId:uni.getStorageSync("userId"),
+					goodId:id,
+				}
+				this.$u.post("/favorite/is",data,this.$JsonHeader)
+				.then(res=>{
+					console.log("isFavorited",res);
+					if(res.data.code==200){
+						this.isStar = true;
+					}
+				})
 			},
 			/**
 			 * 关闭弹窗

@@ -98,12 +98,6 @@ public class GoodsService implements IGoodsService {
         return false;
     }
 
-    @Override
-    public List<Goods> showGoods(int page, int pageNum) {
-        Page<Goods> p = new Page<>(page, pageNum);
-        Page<Goods> goodsPage = goodsMapper.selectPage(p, null);
-        return goodsPage.getRecords();
-    }
 
     @Override
     public Integer goodsCount() {
@@ -137,7 +131,7 @@ public class GoodsService implements IGoodsService {
         }
 
         //获取有更新的以及新增添的商品选项
-        if(good.getGoodChoices().size()!=0){
+        if(good.getGoodChoices()!=null && good.getGoodChoices().size()!=0){
             goodChoiceService.insertOrUpdate(good.getGoodChoices());
         }
 

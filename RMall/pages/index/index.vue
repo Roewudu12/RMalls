@@ -108,7 +108,11 @@
 		onLoad() {
 			console.log("/pages/index/index.vue");
 			// this.checkLogin();
-			this.getGoods();
+			// this.getGoods();
+			
+		},
+		onShow() {
+			this.refreshGoods();
 		},
 		//触底加载更多
 		onReachBottom() {
@@ -121,15 +125,28 @@
 		},
 
 		methods: {
-
+			//刷新商品页面
+			refreshGoods(){
+				console.log("refreshGoods");
+				this.$refs.uWaterfall.clear();
+				this.page = 1;
+				this.getGoods();
+			},
 			//获取Page页的商品
 			getGoods() {
-				this.$u.post('/goods/showGood/hot', {
-					page: this.page
+				this.$u.post('/goods/showGood/goods', {
+					page: this.page,
+					userAuthority:2, 
+					userId:uni.getStorageSync("userId")
 				}).then(res => {
 					console.log("getGoods", res)
 					if (res.data.data.length > 0) {
-						this.flowList = this.flowList.concat(res.data.data);
+						if(this.page==1){
+							this.flowList = res.data.data;
+						}else{
+							this.flowList = this.flowList.concat(res.data.data);
+						}
+						
 						this.page++;
 					} else {
 						this.loadStatus = "nomore";

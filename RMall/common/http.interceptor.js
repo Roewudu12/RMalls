@@ -1,7 +1,8 @@
 const install = (Vue, vm) => {
 	// 此为自定义配置参数，具体参数见上方说明
 	Vue.prototype.$u.http.setConfig({
-		baseUrl: 'http://192.168.2.152:8888', // 请求的本域名
+		// baseUrl: 'http://192.168.2.152:8888', // 请求的局域网域名
+		baseUrl: 'http://localhost:8888', // 请求的本域名
 		method: 'POST',
 		// 设置为json，返回后会对数据进行一次JSON.parse()
 		// dataType: 'json',
@@ -25,8 +26,8 @@ const install = (Vue, vm) => {
 
 	// 响应拦截，如配置，每次请求结束都会执行本方法
 	Vue.prototype.$u.http.interceptor.response = (res) => {
-		console.log("响应拦截",res)
-		if (res.data.code == 201 || res.data.code == 501) {
+		// console.log("响应拦截",res)
+		if (res.data.code != 1212) {
 			// res为服务端返回值，可能有code，result等字段
 			// 这里对res.result进行返回，将会在this.$u.post(url).then(res => {})的then回调中的res的到
 			// 如果配置了originalData为true，请留意这里的返回值

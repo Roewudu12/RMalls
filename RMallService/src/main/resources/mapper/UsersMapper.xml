@@ -8,5 +8,6 @@
         <id column="user_id" property="userId" jdbcType="BIGINT"></id>
         <result column="username" property="username" jdbcType="VARCHAR"></result>
         <result column="user_phone" property="userPhone" jdbcType="VARCHAR"></result>
+        <result column="image" property="image" jdbcType="VARCHAR"></result>
     </resultMap>
 </mapper>

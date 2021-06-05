@@ -1,6 +1,8 @@
 {
   "pages": [
     "pages/index/index",
+    "pages/user_info/user_info",
+    "pages/to_comment/to_comment",
     "pages/login/login",
     "pages/shop_details/shop_details",
     "pages/confirm_order/confirm_order",
@@ -13,7 +15,9 @@
     "pages/shop_details/shopping_cart/shopping_cart",
     "pages/choose_adress/choose_adress",
     "pages/choose_adress/add_adress/add_adress",
-    "pages/order/order"
+    "pages/order/order",
+    "pages/login/register/register",
+    "pages/favorite/favorite"
   ],
   "subPackages": [],
   "window": {

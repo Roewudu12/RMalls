@@ -7,9 +7,6 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
-import org.springframework.security.core.userdetails.User;
-
-import javax.annotation.security.DenyAll;
 import java.util.Date;
 import java.util.List;
 

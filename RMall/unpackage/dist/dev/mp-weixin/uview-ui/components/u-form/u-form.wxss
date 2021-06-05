@@ -24,10 +24,4 @@
 /* 垂直间距 */
 /* 透明度 */
 /* 文章场景相关 */
-.u-grid.data-v-a7b3bc80 {
-  width: 100%;
-  position: relative;
-  box-sizing: border-box;
-  overflow: hidden;
-}
 

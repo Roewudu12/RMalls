@@ -1,5 +1,5 @@
 
-page{
+page {
 	background-color: #EBEEF5;
 }
 
@@ -125,6 +125,10 @@ page{
   margin-top: 15rpx;
   width: 100%;
 }
+.goods_price.data-v-28669c94 {
+  color: #ff0000;
+  font-weight: 700;
+}
 .goods_details_details.data-v-28669c94 {
   margin-top: 15rpx;
   width: 100%;
@@ -134,10 +138,6 @@ page{
   -webkit-flex: 1;
           flex: 1;
   text-align: right;
-}
-.goods_price.data-v-28669c94 {
-  color: #ff0000;
-  font-weight: 700;
 }
 .popup_head.data-v-28669c94 {
   width: 100%;

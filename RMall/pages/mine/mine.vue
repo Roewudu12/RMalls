@@ -2,8 +2,8 @@
 
 	<view class="mine">
 		<view class="my_status_bar"></view>
-		<view class="user my_row_flex u-padding-top-10 u-padding-left-30">
-			<u-avatar :src="user.image" size="large" @click="to_login()"></u-avatar>
+		<view class="user my_row_flex u-padding-top-10 u-padding-left-30" @click="to_userInfo">
+			<u-avatar :src="user.image" size="large"></u-avatar>
 			<view class="user_info u-margin-left-25 u-padding-top-10">
 				<view class="user_name u-font-30">{{user.username}}</view>
 				<view class="user_signature u-font-20 u-margin-top-20">{{user.userIntroduction?user.userIntroduction:user_signature}}</view>
@@ -16,7 +16,7 @@
 		<!-- 订单操作 -->
 		<u-card class="my_circle_radius">
 			<view class="my_row_flex u-row-around" slot="head">
-				<view class="my_row_flex">
+				<view class="my_row_flex" @click="to_favorite">
 					<u-icon name="star"></u-icon>
 					<view class="u-margin-left-5 my_font_weight">收藏</view>
 					<view class="u-margin-left-10 u-font-10 my_text_col_center">{{favorite_goods}}</view>
@@ -35,7 +35,7 @@
 				</view>
 			</view>
 			<view slot="body">
-				<view class="all_orders my_row_flex" @click="to_order">
+				<view class="all_orders my_row_flex" @click="to_order(0)">
 					<view class="title u-font-25 my_font_weight my_font_color_title">我的订单</view>
 					<view class="look_all my_right_elements my_row_flex">
 						<view class="u-font-10 my_font_color_info my_text_col_center">查看全部</view>
@@ -43,44 +43,44 @@
 					</view>
 				</view>
 				<view class="my_row_flex u-row-around u-margin-top-20">
-					<view class="pre_payment u-relative">
-						<u-badge :count="count_pre_payment" size="mini" type="error" :offset="[-3, -6]"></u-badge>
+					<view class="pre_payment u-relative" @click="to_order(0)">
+						<u-badge :count="counts[0]" size="mini" type="error" :offset="[-3, -6]"></u-badge>
 						<u-icon name="pre_payment" custom-prefix="rmall-icon" size="60"></u-icon>
 						<view class="u-font-10">待付款</view>
 					</view>
-					<view class="forwarding u-relative">
-						<u-badge :count="count_forwarding" size="mini" type="error" :offset="[-3, -6]"></u-badge>
+					<view class="forwarding u-relative" @click="to_order(1)">
+						<u-badge :count="counts[1]" size="mini" type="error" :offset="[-3, -6]"></u-badge>
 						<u-icon name="forwarding" custom-prefix="rmall-icon" size="60"></u-icon>
 						<view class="u-font-10">代发货</view>
 					</view>
-					<view class="delivery u-relative">
-						<u-badge :count="count_delivery" size="mini" type="error" :offset="[-3, -6]"></u-badge>
+					<view class="delivery u-relative" @click="to_order(2)">
+						<u-badge :count="counts[2]" size="mini" type="error" :offset="[-3, -6]"></u-badge>
 						<u-icon name="delivery" custom-prefix="rmall-icon" size="60"></u-icon>
 						<view class="u-font-10">待收货</view>
 					</view>
-					<view class="comments u-relative">
-						<u-badge :count="count_comments" size="mini" type="error" :offset="[-3, -6]"></u-badge>
+					<view class="comments u-relative" @click="to_order(3)">
+						<u-badge :count="counts[3]" size="mini" type="error" :offset="[-3, -6]"></u-badge>
 						<u-icon name="comments" custom-prefix="rmall-icon" size="60"></u-icon>
 						<view class="u-font-10">待评价</view>
 					</view>
 					<view class="after_sale u-text-center u-relative">
-						<u-badge :count="count_after_sale" size="mini" type="error" :offset="[-3, 2]"></u-badge>
+						<u-badge :count="counts[5]" size="mini" type="error" :offset="[-3, 2]"></u-badge>
 						<u-icon name="after_sale" custom-prefix="rmall-icon" size="60"></u-icon>
 						<view class="u-font-10">退款/售后</view>
 					</view>
 				</view>
 			</view>
 		</u-card>
-
-		<!-- 我的订阅 -->
-		<u-card class="my_circle_radius">
+<!-- 
+		我的订阅 -->
+		<!-- <u-card class="my_circle_radius">
 			<view class="my_row_flex" slot="head">
 				<view class="title my_font_weight my_font_color_title">我的订阅</view>
 			</view>
 
-			<view slot="body">
+			<view slot="body"> -->
 				<!-- 商家最新动态 -->
-				<view class="new_moving u-margin-bottom-20" :key="index" v-for="(item,index) in new_moving_list">
+				<!-- <view class="new_moving u-margin-bottom-20" :key="index" v-for="(item,index) in new_moving_list">
 					<view class="shop_info my_row_flex">
 						<u-image width="80rpx" height="80rpx" :src="item.shop_icon"></u-image>
 						<view class="shop_info_wrap u-margin-left-20 u-col-center">
@@ -102,7 +102,7 @@
 					</u-grid>
 				</view>
 			</view>
-		</u-card> 
+		</u-card> -->
 	</view>
 </template>
 
@@ -111,17 +111,11 @@
 		data() {
 			return {
 				user:{},//用户信息
-				avatar_src: "https://cdn.uviewui.com/uview/common/classify/2/1.jpg",
-				user_name: "哈哈哈哈",
 				user_signature: "暂无个性签名",
 				favorite_goods: 142,
 				subscribed_shop: 242,
 				footprint_goods: 11,
-				count_pre_payment: 1,
-				count_comments: 0,
-				count_delivery: 2,
-				count_forwarding: 0,
-				count_after_sale: 0,
+				counts:[0,0,0,0,0,0],
 				new_moving_list: [{
 						shop_name: "旗舰店",
 						shop_icon: "https://cdn.uviewui.com/uview/common/classify/1/13.jpg",
@@ -195,7 +189,23 @@
 			}
 		},
 		onLoad() {
+			// this.getUserDetails();
+			this.getFavoriteCount();
+			this.getOrderCount(0)
+			this.getOrderCount(1)
+			this.getOrderCount(2)
+			this.getOrderCount(3)
+			this.getOrderCount(5)
+			
+		},
+		onShow() {
 			this.getUserDetails();
+			this.getFavoriteCount();
+			this.getOrderCount(0)
+			this.getOrderCount(1)
+			this.getOrderCount(2)
+			this.getOrderCount(3)
+			this.getOrderCount(5)
 		},
 		methods: {
 			getUserDetails(){
@@ -204,23 +214,54 @@
 				}).then(res=>{
 					console.log("getUserDetails",res);
 					this.user = res.data.data;
+					
 				})
 			},
-			to_order(){
-				uni.navigateTo({
-					url:"/pages/order/order"
+			to_order(index){
+				this.$u.route("/pages/order/order",{
+					current:index
+				});
+			},
+			to_userInfo(){
+				this.$u.route("/pages/user_info/user_info");
+			},
+			/**
+			 * 获取该用户不同状态的订单数量
+			 */
+			getOrderCount(index){
+				let data={
+					userId:uni.getStorageSync("userId"),
+					userAuthority:2,
+					status:index+1
+				}
+				this.$u.post("/order/count/status",data)
+				.then(res=>{
+					this.counts[index] =res.data.data;
 				})
 			},
-			to_login(){
-				// uni.navigateTo({
-				// 	url:"/pages/login/login"
-				// })
+			getFavoriteCount(){
+				this.$u.post("/favorite/count",{
+					userId:uni.getStorageSync("userId"),
+				})
+				.then(res=>{
+					console.log("getFavoriteCount",res)
+					this.favorite_goods = res.data.data.count;
+				})
 			},
-			
+			/**
+			 * 跳转到我的收藏页面
+			 */
+			to_favorite(){
+				this.$u.route("/pages/favorite/favorite")
+			}
 		}
 	}
 </script>
-
+<style>
+	page{
+		background-color: #EBEEF5;
+	}
+</style>
 <style scoped lang="scss">
 	.mine {
 		background-color: #EBEEF5;

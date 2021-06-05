@@ -57,7 +57,6 @@ public interface IGoodsService {
      */
     boolean insertGood(Goods good);
 
-    List<Goods> showGoods(int page, int pageNum);
 
     Integer goodsCount();
 

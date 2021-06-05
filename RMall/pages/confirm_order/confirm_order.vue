@@ -154,6 +154,7 @@
 						goodNum:goods[i].goodNum,
 						goodChoice:goods[i].goodChoice,
 						sellerId:goods[i].good.seller.userId,
+						good:goods[i].good
 					});
 					submitedCart.push(goods[i].cartId);
 				}

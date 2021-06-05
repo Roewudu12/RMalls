@@ -61,19 +61,12 @@ public class UsersController {
 
     /**
      * 更新用户信息
-     * @param map 表单信息
+     * @param user 表单信息
      * @return
      */
     @RequestMapping(value = {"/userInfo/update"},method = RequestMethod.POST)
-    public String userInfoUpdate(@RequestBody Map map){
-        log.debug("userInfoUpdate",map);
-        Users user = new Users();
-        user.setUserId(Long.valueOf(map.get("userId").toString()));
-        user.setUserAuthority((Integer) map.get("userAuthority"));
-        user.setUsername((String)map.get("username"));
-        user.setPassword(new BCryptPasswordEncoder().encode((String)map.get("password")));
-        user.setUserPhone((String)map.get("userPhone"));
-        user.setUserIntroduction((String)map.get("userIntroduction"));
+    public String userInfoUpdate(@RequestBody Users user){
+
         Users users = userService.userInfoUpdate(user);
 
         if(users==null){
@@ -114,16 +107,18 @@ public class UsersController {
 
     /**
      * 新增用户
-     * @param map 表单获取
+     * @param user 表单获取
      * @return
      */
     @RequestMapping(value = {"/insert"},method = RequestMethod.POST)
-    public  String insertUser(@RequestBody Map map){
-        Users user = new Users();
-        user.setUsername((String)map.get("username"));
-        user.setUserPhone((String)map.get("userPhone"));
-        user.setUserAuthority((Integer)map.get("userAuthority"));
-        user.setPassword(new BCryptPasswordEncoder().encode(Constants.PASSWORD));
+    public  String insertUser(@RequestBody Users user){
+        String password="";
+        if(user.getPassword()==null){
+            password=Constants.PASSWORD;
+        }else {
+            password = user.getPassword();
+        }
+        user.setPassword(new BCryptPasswordEncoder().encode(password));
 
         if (!userService.insertUser(user)) {
             return JSON.toJSONString(Result.error(ResultCode.ERROR));

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.roe.rmallservice.mapper.CommentsMapper">
+    <resultMap id="commentsInfo" type="com.roe.rmallservice.entity.Comments">
+        <id property="commentId" jdbcType="BIGINT" column="comment_id"></id>
+        <result property="userId" jdbcType="BIGINT" column="user_id"></result>
+        <result property="goodId" jdbcType="BIGINT" column="good_id"></result>
+        <result property="content" jdbcType="VARCHAR" column="content"></result>
+        <result property="star" jdbcType="INTEGER" column="star"></result>
+        <result property="createTime" jdbcType="TIMESTAMP" column="create_time"></result>
+
+        <association property="publisher" javaType="com.roe.rmallservice.entity.Users" resultMap="com.roe.rmallservice.mapper.UsersMapper.userInfo"></association>
+    </resultMap>
+
+    <select id="selectCommentsByGoodId" resultMap="commentsInfo">
+        select * from comments a left join users b on a.user_id = b.user_id
+        where a.good_id = #{goodId}
+    </select>
+</mapper>

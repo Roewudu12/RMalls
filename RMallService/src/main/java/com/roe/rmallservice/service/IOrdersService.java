@@ -27,7 +27,19 @@ public interface IOrdersService {
 
     boolean updateOrder(Orders order);
 
-    List<Orders> showOrdersByUserId(Long userId, int page, int pageNum);
+    List<Orders> showOrdersBySellerId(Long userId, int page, int pageNum);
 
-    Integer ordersCountByUserId(Long userId);
+    List<Orders> showOrdersByBuyerId(Long userId, int page, int pageNum);
+
+    Integer ordersCountBySellerId(Long userId);
+    Integer ordersCountByBuyerId(Long userId);
+
+    boolean updatePayOrder(Orders order);
+
+    Integer ordersCountBySellerIdAndStatus(Long userId, int status);
+    Integer ordersCountByBuyerIdAndStatus(Long userId, int status);
+
+    Integer ordersCountByStatus(int status);
+
+    boolean cancelOrder(Orders order);
 }
